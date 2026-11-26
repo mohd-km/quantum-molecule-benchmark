@@ -15,8 +15,8 @@ export const PESChart: React.FC<PESChartProps> = ({
   onSelectIndex,
 }) => {
   const width = 760;
-  const height = 400;
-  const pad = { top: 26, right: 24, bottom: 52, left: 70 };
+  const height = 385;
+  const pad = { top: 24, right: 24, bottom: 50, left: 70 };
   const plotW = width - pad.left - pad.right;
   const plotH = height - pad.top - pad.bottom;
 
@@ -37,7 +37,6 @@ export const PESChart: React.FC<PESChartProps> = ({
       .map((p, i) => `${i === 0 ? 'M' : 'L'} ${xScale(p.r).toFixed(2)} ${yScale(accessor(p)).toFixed(2)}`)
       .join(' ');
 
-  // Shaded noise gap polygon between Noisy VQE and Exact FCI
   const noiseAreaPath = [
     ...points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${xScale(p.r).toFixed(2)} ${yScale(p.vqeNoisy).toFixed(2)}`),
     ...[...points]
@@ -46,7 +45,6 @@ export const PESChart: React.FC<PESChartProps> = ({
     'Z',
   ].join(' ');
 
-  // Chemical accuracy visual band around FCI (+/- 1.6 mHa, with minimum 2px visibility)
   const chemAccAreaPath = [
     ...points.map((p, i) => {
       const yUpper = Math.min(yScale(p.fci + 0.0016), yScale(p.fci) - 2);
@@ -75,7 +73,7 @@ export const PESChart: React.FC<PESChartProps> = ({
             Potential Energy Surface ({spec.formula}, {spec.basis})
           </h2>
           <p className="card-subtitle">
-            Ground-state dissociation energy (Hartrees) vs. internuclear bond length (Angstroms). Select any point to inspect.
+            Dissociation energy (Ha) vs. bond length (A). Hover or tap any geometry to inspect.
           </p>
         </div>
         <div className="legend-row" aria-label="Chart legend">
@@ -106,8 +104,8 @@ export const PESChart: React.FC<PESChartProps> = ({
       >
         <defs>
           <linearGradient id="noiseGapGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#f43f5e" stopOpacity="0.28" />
-            <stop offset="100%" stopColor="#f43f5e" stopOpacity="0.06" />
+            <stop offset="0%" stopColor="#b91c1c" stopOpacity="0.16" />
+            <stop offset="100%" stopColor="#b91c1c" stopOpacity="0.03" />
           </linearGradient>
         </defs>
 
@@ -121,14 +119,14 @@ export const PESChart: React.FC<PESChartProps> = ({
                 y1={y}
                 x2={width - pad.right}
                 y2={y}
-                stroke="#1e293b"
+                stroke="#e5e5e3"
                 strokeWidth="1"
               />
               <text
                 x={pad.left - 10}
                 y={y + 4}
                 textAnchor="end"
-                fill="#94a3b8"
+                fill="#555555"
                 fontSize="12"
                 fontFamily="var(--font-mono)"
               >
@@ -148,7 +146,7 @@ export const PESChart: React.FC<PESChartProps> = ({
                 y1={pad.top}
                 x2={x}
                 y2={height - pad.bottom}
-                stroke="#1e293b"
+                stroke="#ececea"
                 strokeWidth="1"
                 strokeDasharray="3 4"
               />
@@ -156,7 +154,7 @@ export const PESChart: React.FC<PESChartProps> = ({
                 x={x}
                 y={height - pad.bottom + 20}
                 textAnchor="middle"
-                fill="#94a3b8"
+                fill="#555555"
                 fontSize="12"
                 fontFamily="var(--font-mono)"
               >
@@ -172,15 +170,15 @@ export const PESChart: React.FC<PESChartProps> = ({
           y1={pad.top}
           x2={eqX}
           y2={height - pad.bottom}
-          stroke="#475569"
+          stroke="#9ca3af"
           strokeWidth="1.25"
           strokeDasharray="4 4"
         />
         <text
           x={eqX + 6}
           y={pad.top + 14}
-          fill="#94a3b8"
-          fontSize="11"
+          fill="#555555"
+          fontSize="11.5"
           fontFamily="var(--font-mono)"
         >
           R_eq = {spec.equilibriumR.toFixed(2)} A
@@ -190,14 +188,14 @@ export const PESChart: React.FC<PESChartProps> = ({
         <path d={noiseAreaPath} fill="url(#noiseGapGrad)" />
 
         {/* Chemical accuracy band around FCI */}
-        <path d={chemAccAreaPath} fill="#34d399" fillOpacity="0.22" />
+        <path d={chemAccAreaPath} fill="#15803d" fillOpacity="0.16" />
 
         {/* Hartree-Fock curve */}
         <path
           d={buildPath((p) => p.rhf)}
           fill="none"
-          stroke="#f59e0b"
-          strokeWidth="2.4"
+          stroke="#b45309"
+          strokeWidth="2.2"
           strokeDasharray="7 5"
         />
 
@@ -205,16 +203,16 @@ export const PESChart: React.FC<PESChartProps> = ({
         <path
           d={buildPath((p) => p.fci)}
           fill="none"
-          stroke="#38bdf8"
-          strokeWidth="2.8"
+          stroke="#1d4ed8"
+          strokeWidth="2.6"
         />
 
         {/* Noiseless VQE curve */}
         <path
           d={buildPath((p) => p.vqeNoiseless)}
           fill="none"
-          stroke="#34d399"
-          strokeWidth="2.2"
+          stroke="#15803d"
+          strokeWidth="2.1"
           strokeDasharray="2 4"
           strokeLinecap="round"
         />
@@ -223,8 +221,8 @@ export const PESChart: React.FC<PESChartProps> = ({
         <path
           d={buildPath((p) => p.vqeNoisy)}
           fill="none"
-          stroke="#f43f5e"
-          strokeWidth="2.6"
+          stroke="#b91c1c"
+          strokeWidth="2.5"
         />
 
         {/* Selected crosshair */}
@@ -233,17 +231,17 @@ export const PESChart: React.FC<PESChartProps> = ({
           y1={pad.top}
           x2={xScale(selected.r)}
           y2={height - pad.bottom}
-          stroke="#e2e8f0"
-          strokeOpacity="0.35"
+          stroke="#111111"
+          strokeOpacity="0.22"
           strokeWidth="1.2"
         />
 
         {/* Selected point markers */}
-        <circle cx={xScale(selected.r)} cy={yScale(selected.rhf)} r="4.5" fill="#f59e0b" stroke="#0b0f17" strokeWidth="1.5" />
-        <circle cx={xScale(selected.r)} cy={yScale(selected.fci)} r="5" fill="#38bdf8" stroke="#0b0f17" strokeWidth="1.5" />
-        <circle cx={xScale(selected.r)} cy={yScale(selected.vqeNoisy)} r="5" fill="#f43f5e" stroke="#0b0f17" strokeWidth="1.5" />
+        <circle cx={xScale(selected.r)} cy={yScale(selected.rhf)} r="4.5" fill="#b45309" stroke="#ffffff" strokeWidth="1.5" />
+        <circle cx={xScale(selected.r)} cy={yScale(selected.fci)} r="5" fill="#1d4ed8" stroke="#ffffff" strokeWidth="1.5" />
+        <circle cx={xScale(selected.r)} cy={yScale(selected.vqeNoisy)} r="5" fill="#b91c1c" stroke="#ffffff" strokeWidth="1.5" />
 
-        {/* Interactive hit targets for every bond length */}
+        {/* Interactive hit targets */}
         {points.map((pt, idx) => {
           const cx = xScale(pt.r);
           const isSelected = idx === selectedIndex;
@@ -265,9 +263,9 @@ export const PESChart: React.FC<PESChartProps> = ({
                 <circle
                   cx={cx}
                   cy={yScale(pt.vqeNoisy)}
-                  r="2.8"
-                  fill="#f43f5e"
-                  fillOpacity="0.7"
+                  r="2.6"
+                  fill="#b91c1c"
+                  fillOpacity="0.65"
                 />
               )}
             </g>
@@ -279,8 +277,8 @@ export const PESChart: React.FC<PESChartProps> = ({
           x={pad.left + plotW / 2}
           y={height - 10}
           textAnchor="middle"
-          fill="#cbd5e1"
-          fontSize="13"
+          fill="#111111"
+          fontSize="12.5"
           fontWeight="600"
         >
           Internuclear Bond Length R (Angstroms)
@@ -289,8 +287,8 @@ export const PESChart: React.FC<PESChartProps> = ({
           x={18}
           y={pad.top + plotH / 2}
           textAnchor="middle"
-          fill="#cbd5e1"
-          fontSize="13"
+          fill="#111111"
+          fontSize="12.5"
           fontWeight="600"
           transform={`rotate(-90 18 ${pad.top + plotH / 2})`}
         >

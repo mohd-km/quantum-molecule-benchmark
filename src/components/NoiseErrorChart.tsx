@@ -20,13 +20,12 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
   onSelectIndex,
 }) => {
   const width = 760;
-  const height = 280;
-  const pad = { top: 24, right: 24, bottom: 48, left: 70 };
+  const height = 270;
+  const pad = { top: 24, right: 24, bottom: 46, left: 70 };
   const plotW = width - pad.left - pad.right;
   const plotH = height - pad.top - pad.bottom;
 
   const [xMin, xMax] = spec.xDomain;
-  // Log scale from 0.01 mHa to 500 mHa so 1.6 mHa threshold is crystal clear
   const logMin = Math.log10(0.01);
   const logMax = Math.log10(600);
 
@@ -60,13 +59,13 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
             Absolute Energy Error vs. Chemical Accuracy (1.6 mHa)
           </h2>
           <p className="card-subtitle">
-            Log-scale deviation |E - E_FCI| in milliHartrees (mHa). Any curve above the 1.6 mHa line fails chemical accuracy.
+            Log-scale deviation |E - E_FCI| in mHa. Curves above 1.6 mHa fail chemical accuracy.
           </p>
         </div>
         <div className={`status-pill ${selected.beatsChemicalAccuracy ? 'pill-pass' : 'pill-fail'}`}>
           {selected.beatsChemicalAccuracy
-            ? `PASS at R=${selected.r.toFixed(2)} A (${selected.vqeNoisyErrorMHa.toFixed(2)} mHa)`
-            : `FAIL at R=${selected.r.toFixed(2)} A (${errorRatio.toFixed(1)}x threshold)`}
+            ? `PASS · R=${selected.r.toFixed(2)} A (${selected.vqeNoisyErrorMHa.toFixed(2)} mHa)`
+            : `FAIL · R=${selected.r.toFixed(2)} A (${errorRatio.toFixed(1)}x cutoff)`}
         </div>
       </div>
 
@@ -82,8 +81,8 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
           y={chemAccY}
           width={plotW}
           height={pad.top + plotH - chemAccY}
-          fill="#10b981"
-          fillOpacity="0.10"
+          fill="#15803d"
+          fillOpacity="0.08"
         />
 
         {/* Y gridlines */}
@@ -97,7 +96,7 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
                 y1={y}
                 x2={width - pad.right}
                 y2={y}
-                stroke={isThreshold ? '#34d399' : '#1e293b'}
+                stroke={isThreshold ? '#15803d' : '#e5e5e3'}
                 strokeWidth={isThreshold ? '1.8' : '1'}
                 strokeDasharray={isThreshold ? '6 4' : undefined}
               />
@@ -105,9 +104,9 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
                 x={pad.left - 10}
                 y={y + 4}
                 textAnchor="end"
-                fill={isThreshold ? '#34d399' : '#94a3b8'}
+                fill={isThreshold ? '#15803d' : '#555555'}
                 fontSize="11.5"
-                fontWeight={isThreshold ? '700' : '400'}
+                fontWeight={isThreshold ? '600' : '400'}
                 fontFamily="var(--font-mono)"
               >
                 {tick === 1.6 ? '1.6' : tick}
@@ -121,7 +120,7 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
           x={width - pad.right - 6}
           y={chemAccY - 7}
           textAnchor="end"
-          fill="#34d399"
+          fill="#15803d"
           fontSize="11"
           fontWeight="600"
           fontFamily="var(--font-mono)"
@@ -133,22 +132,22 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
         <path
           d={buildPath((p) => p.rhfErrorMHa)}
           fill="none"
-          stroke="#f59e0b"
-          strokeWidth="2.2"
+          stroke="#b45309"
+          strokeWidth="2.1"
           strokeDasharray="6 4"
         />
         <path
           d={buildPath((p) => p.vqeNoiselessErrorMHa)}
           fill="none"
-          stroke="#34d399"
+          stroke="#15803d"
           strokeWidth="2"
           strokeDasharray="2 4"
         />
         <path
           d={buildPath((p) => p.vqeNoisyErrorMHa)}
           fill="none"
-          stroke="#f43f5e"
-          strokeWidth="2.6"
+          stroke="#b91c1c"
+          strokeWidth="2.5"
         />
 
         {/* Selected vertical line and error bar */}
@@ -157,24 +156,24 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
           y1={pad.top}
           x2={xScale(selected.r)}
           y2={height - pad.bottom}
-          stroke="#e2e8f0"
-          strokeOpacity="0.3"
+          stroke="#111111"
+          strokeOpacity="0.22"
           strokeWidth="1.2"
         />
         <circle
           cx={xScale(selected.r)}
           cy={yScale(selected.vqeNoisyErrorMHa)}
           r="5"
-          fill="#f43f5e"
-          stroke="#0b0f17"
+          fill="#b91c1c"
+          stroke="#ffffff"
           strokeWidth="1.5"
         />
         <circle
           cx={xScale(selected.r)}
           cy={yScale(selected.rhfErrorMHa)}
           r="4.2"
-          fill="#f59e0b"
-          stroke="#0b0f17"
+          fill="#b45309"
+          stroke="#ffffff"
           strokeWidth="1.5"
         />
 
@@ -202,7 +201,7 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
               x={xScale(val)}
               y={height - pad.bottom + 18}
               textAnchor="middle"
-              fill="#94a3b8"
+              fill="#555555"
               fontSize="11.5"
               fontFamily="var(--font-mono)"
             >
@@ -215,8 +214,8 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
           x={pad.left + plotW / 2}
           y={height - 8}
           textAnchor="middle"
-          fill="#cbd5e1"
-          fontSize="12.5"
+          fill="#111111"
+          fontSize="12"
           fontWeight="600"
         >
           Bond Length R (Angstroms)
@@ -225,8 +224,8 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
           x={18}
           y={pad.top + plotH / 2}
           textAnchor="middle"
-          fill="#cbd5e1"
-          fontSize="12.5"
+          fill="#111111"
+          fontSize="12"
           fontWeight="600"
           transform={`rotate(-90 18 ${pad.top + plotH / 2})`}
         >
@@ -238,18 +237,18 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
       <div className="error-bar-box">
         <div className="error-bar-meta">
           <span>
-            Noisy VQE Error Bar at R = {selected.r.toFixed(2)} A:{' '}
+            Noisy VQE Error @ R = {selected.r.toFixed(2)} A:{' '}
             <strong>{selected.vqeNoisyErrorMHa.toFixed(2)} mHa</strong> ({kcalError.toFixed(2)} kcal/mol)
           </span>
           <span>
-            vs. Classical RHF: <strong>{selected.rhfErrorMHa.toFixed(2)} mHa</strong>
+            Classical RHF: <strong>{selected.rhfErrorMHa.toFixed(2)} mHa</strong>
           </span>
         </div>
         <div className="error-meter-track" aria-hidden="true">
           <div
             className={`error-meter-fill ${selected.beatsChemicalAccuracy ? 'fill-pass' : 'fill-fail'}`}
             style={{
-              width: `${Math.min(100, (Math.log10(clampErr(selected.vqeNoisyErrorMHa)) - logMin) / (logMax - logMin) * 100)}%`,
+              width: `${Math.min(100, ((Math.log10(clampErr(selected.vqeNoisyErrorMHa)) - logMin) / (logMax - logMin)) * 100)}%`,
             }}
           />
           <div
@@ -261,7 +260,7 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
           />
         </div>
         <div className="error-meter-labels">
-          <span>0.01 mHa (Exact)</span>
+          <span>0.01 mHa</span>
           <span className="threshold-label">1.6 mHa Cutoff</span>
           <span>600 mHa</span>
         </div>
