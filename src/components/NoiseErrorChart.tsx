@@ -1,0 +1,271 @@
+import React from 'react';
+import {
+  CHEMICAL_ACCURACY_MHA,
+  EvaluatedPoint,
+  HA_TO_KCAL_MOL,
+  MoleculeSpec,
+} from '../data/molecules';
+
+interface NoiseErrorChartProps {
+  spec: MoleculeSpec;
+  points: EvaluatedPoint[];
+  selectedIndex: number;
+  onSelectIndex: (index: number) => void;
+}
+
+export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
+  spec,
+  points,
+  selectedIndex,
+  onSelectIndex,
+}) => {
+  const width = 760;
+  const height = 280;
+  const pad = { top: 24, right: 24, bottom: 48, left: 70 };
+  const plotW = width - pad.left - pad.right;
+  const plotH = height - pad.top - pad.bottom;
+
+  const [xMin, xMax] = spec.xDomain;
+  // Log scale from 0.01 mHa to 500 mHa so 1.6 mHa threshold is crystal clear
+  const logMin = Math.log10(0.01);
+  const logMax = Math.log10(600);
+
+  const clampErr = (val: number) => Math.max(0.01, Math.min(600, val));
+  const xScale = (r: number) => pad.left + ((r - xMin) / (xMax - xMin)) * plotW;
+  const yScale = (mha: number) => {
+    const lv = Math.log10(clampErr(mha));
+    return pad.top + plotH - ((lv - logMin) / (logMax - logMin)) * plotH;
+  };
+
+  const buildPath = (accessor: (p: EvaluatedPoint) => number) =>
+    points
+      .map(
+        (p, i) =>
+          `${i === 0 ? 'M' : 'L'} ${xScale(p.r).toFixed(2)} ${yScale(accessor(p)).toFixed(2)}`
+      )
+      .join(' ');
+
+  const chemAccY = yScale(CHEMICAL_ACCURACY_MHA);
+  const yTicks = [0.01, 0.1, 1.6, 10, 100, 500];
+  const selected = points[selectedIndex] ?? points[0];
+
+  const errorRatio = selected.vqeNoisyErrorMHa / CHEMICAL_ACCURACY_MHA;
+  const kcalError = (selected.vqeNoisyErrorMHa / 1000) * HA_TO_KCAL_MOL;
+
+  return (
+    <div className="chart-frame">
+      <div className="chart-header">
+        <div>
+          <h2 className="card-title">
+            Absolute Energy Error vs. Chemical Accuracy (1.6 mHa)
+          </h2>
+          <p className="card-subtitle">
+            Log-scale deviation |E - E_FCI| in milliHartrees (mHa). Any curve above the 1.6 mHa line fails chemical accuracy.
+          </p>
+        </div>
+        <div className={`status-pill ${selected.beatsChemicalAccuracy ? 'pill-pass' : 'pill-fail'}`}>
+          {selected.beatsChemicalAccuracy
+            ? `PASS at R=${selected.r.toFixed(2)} A (${selected.vqeNoisyErrorMHa.toFixed(2)} mHa)`
+            : `FAIL at R=${selected.r.toFixed(2)} A (${errorRatio.toFixed(1)}x threshold)`}
+        </div>
+      </div>
+
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        className="svg-chart"
+        role="img"
+        aria-label="Logarithmic energy error comparison against the 1.6 mHa chemical accuracy threshold"
+      >
+        {/* Chemically accurate green zone */}
+        <rect
+          x={pad.left}
+          y={chemAccY}
+          width={plotW}
+          height={pad.top + plotH - chemAccY}
+          fill="#10b981"
+          fillOpacity="0.10"
+        />
+
+        {/* Y gridlines */}
+        {yTicks.map((tick) => {
+          const y = yScale(tick);
+          const isThreshold = tick === CHEMICAL_ACCURACY_MHA;
+          return (
+            <g key={tick}>
+              <line
+                x1={pad.left}
+                y1={y}
+                x2={width - pad.right}
+                y2={y}
+                stroke={isThreshold ? '#34d399' : '#1e293b'}
+                strokeWidth={isThreshold ? '1.8' : '1'}
+                strokeDasharray={isThreshold ? '6 4' : undefined}
+              />
+              <text
+                x={pad.left - 10}
+                y={y + 4}
+                textAnchor="end"
+                fill={isThreshold ? '#34d399' : '#94a3b8'}
+                fontSize="11.5"
+                fontWeight={isThreshold ? '700' : '400'}
+                fontFamily="var(--font-mono)"
+              >
+                {tick === 1.6 ? '1.6' : tick}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Threshold callout */}
+        <text
+          x={width - pad.right - 6}
+          y={chemAccY - 7}
+          textAnchor="end"
+          fill="#34d399"
+          fontSize="11"
+          fontWeight="600"
+          fontFamily="var(--font-mono)"
+        >
+          Chemical Accuracy Limit: 1.6 mHa (1.0 kcal/mol)
+        </text>
+
+        {/* Curves */}
+        <path
+          d={buildPath((p) => p.rhfErrorMHa)}
+          fill="none"
+          stroke="#f59e0b"
+          strokeWidth="2.2"
+          strokeDasharray="6 4"
+        />
+        <path
+          d={buildPath((p) => p.vqeNoiselessErrorMHa)}
+          fill="none"
+          stroke="#34d399"
+          strokeWidth="2"
+          strokeDasharray="2 4"
+        />
+        <path
+          d={buildPath((p) => p.vqeNoisyErrorMHa)}
+          fill="none"
+          stroke="#f43f5e"
+          strokeWidth="2.6"
+        />
+
+        {/* Selected vertical line and error bar */}
+        <line
+          x1={xScale(selected.r)}
+          y1={pad.top}
+          x2={xScale(selected.r)}
+          y2={height - pad.bottom}
+          stroke="#e2e8f0"
+          strokeOpacity="0.3"
+          strokeWidth="1.2"
+        />
+        <circle
+          cx={xScale(selected.r)}
+          cy={yScale(selected.vqeNoisyErrorMHa)}
+          r="5"
+          fill="#f43f5e"
+          stroke="#0b0f17"
+          strokeWidth="1.5"
+        />
+        <circle
+          cx={xScale(selected.r)}
+          cy={yScale(selected.rhfErrorMHa)}
+          r="4.2"
+          fill="#f59e0b"
+          stroke="#0b0f17"
+          strokeWidth="1.5"
+        />
+
+        {/* Hit zones */}
+        {points.map((pt, idx) => (
+          <rect
+            key={pt.r}
+            x={xScale(pt.r) - plotW / (points.length * 2)}
+            y={pad.top}
+            width={plotW / points.length}
+            height={plotH}
+            fill="transparent"
+            style={{ cursor: 'pointer' }}
+            onClick={() => onSelectIndex(idx)}
+            onMouseEnter={() => onSelectIndex(idx)}
+          />
+        ))}
+
+        {/* X axis ticks */}
+        {[0, 0.25, 0.5, 0.75, 1].map((frac) => {
+          const val = xMin + (xMax - xMin) * frac;
+          return (
+            <text
+              key={frac}
+              x={xScale(val)}
+              y={height - pad.bottom + 18}
+              textAnchor="middle"
+              fill="#94a3b8"
+              fontSize="11.5"
+              fontFamily="var(--font-mono)"
+            >
+              {val.toFixed(2)}
+            </text>
+          );
+        })}
+
+        <text
+          x={pad.left + plotW / 2}
+          y={height - 8}
+          textAnchor="middle"
+          fill="#cbd5e1"
+          fontSize="12.5"
+          fontWeight="600"
+        >
+          Bond Length R (Angstroms)
+        </text>
+        <text
+          x={18}
+          y={pad.top + plotH / 2}
+          textAnchor="middle"
+          fill="#cbd5e1"
+          fontSize="12.5"
+          fontWeight="600"
+          transform={`rotate(-90 18 ${pad.top + plotH / 2})`}
+        >
+          |Delta E| (mHa, log)
+        </text>
+      </svg>
+
+      {/* Chemical Accuracy Error Bar Meter at Selected R */}
+      <div className="error-bar-box">
+        <div className="error-bar-meta">
+          <span>
+            Noisy VQE Error Bar at R = {selected.r.toFixed(2)} A:{' '}
+            <strong>{selected.vqeNoisyErrorMHa.toFixed(2)} mHa</strong> ({kcalError.toFixed(2)} kcal/mol)
+          </span>
+          <span>
+            vs. Classical RHF: <strong>{selected.rhfErrorMHa.toFixed(2)} mHa</strong>
+          </span>
+        </div>
+        <div className="error-meter-track" aria-hidden="true">
+          <div
+            className={`error-meter-fill ${selected.beatsChemicalAccuracy ? 'fill-pass' : 'fill-fail'}`}
+            style={{
+              width: `${Math.min(100, (Math.log10(clampErr(selected.vqeNoisyErrorMHa)) - logMin) / (logMax - logMin) * 100)}%`,
+            }}
+          />
+          <div
+            className="error-meter-threshold"
+            style={{
+              left: `${((Math.log10(CHEMICAL_ACCURACY_MHA) - logMin) / (logMax - logMin)) * 100}%`,
+            }}
+            title="1.6 mHa Chemical Accuracy Threshold"
+          />
+        </div>
+        <div className="error-meter-labels">
+          <span>0.01 mHa (Exact)</span>
+          <span className="threshold-label">1.6 mHa Cutoff</span>
+          <span>600 mHa</span>
+        </div>
+      </div>
+    </div>
+  );
+};
