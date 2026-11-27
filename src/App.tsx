@@ -189,11 +189,43 @@ export const App: React.FC = () => {
       <header className="site-header">
         <div className="header-inner">
           <div className="brand-block">
-            <span className="eyebrow">Quantum Chemistry Benchmarker</span>
-            <h1 className="site-title">2-Qubit VQE Circuit &amp; Noise Simulator</h1>
-            <p className="site-byline">
-              Mohammed KM &middot; Client-side STO-3G statevector simulation vs. exact FCI ground truth
-            </p>
+            <div className="brand-lockup">
+              <div className="brand-mark" aria-hidden="true">
+                <svg
+                  viewBox="0 0 40 40"
+                  width="40"
+                  height="40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    x="1"
+                    y="1"
+                    width="38"
+                    height="38"
+                    rx="9"
+                    fill="#ffffff"
+                    stroke="#111111"
+                    strokeWidth="1.5"
+                  />
+                  <line x1="9" y1="14.5" x2="31" y2="14.5" stroke="#111111" strokeWidth="1.35" strokeLinecap="round" />
+                  <line x1="9" y1="25.5" x2="31" y2="25.5" stroke="#111111" strokeWidth="1.35" strokeLinecap="round" />
+                  <line x1="20" y1="14.5" x2="20" y2="29.5" stroke="#111111" strokeWidth="1.35" />
+                  <circle cx="20" cy="14.5" r="2.75" fill="#111111" />
+                  <circle cx="20" cy="25.5" r="4.25" fill="#ffffff" stroke="#111111" strokeWidth="1.35" />
+                  <line x1="17.25" y1="25.5" x2="22.75" y2="25.5" stroke="#111111" strokeWidth="1.25" />
+                  <circle cx="11.5" cy="14.5" r="1.5" fill="#111111" />
+                  <circle cx="28.5" cy="25.5" r="1.5" fill="#111111" />
+                </svg>
+              </div>
+              <div className="brand-copy">
+                <span className="eyebrow">Quantum Chemistry Benchmarker</span>
+                <h1 className="site-title">2-Qubit VQE Circuit &amp; Noise Simulator</h1>
+                <p className="site-byline">
+                  Mohammed KM &middot; Client-side STO-3G statevector simulation vs. exact FCI ground truth
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="molecule-toggle" role="group" aria-label="Select molecule">

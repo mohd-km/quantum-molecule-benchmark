@@ -208,7 +208,7 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
         </div>
       </div>
 
-      {/* Framed Dark Scientific Instrument Box: 2-Qubit Circuit + Live Statevector Readout */}
+      {/* Crisp Paper-White Scientific Instrument Box: 2-Qubit Circuit + Live Statevector Readout */}
       <div className="instrument-figure">
         <div className="instrument-head">
           <span className="instrument-tag">
@@ -231,23 +231,23 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
               aria-label="Live 2-qubit parameterized VQE quantum circuit"
             >
               {/* Qubit wires */}
-              <line x1="56" y1="48" x2="516" y2="48" stroke="#475569" strokeWidth="1.6" />
-              <line x1="56" y1="108" x2="516" y2="108" stroke="#475569" strokeWidth="1.6" />
+              <line x1="56" y1="48" x2="516" y2="48" stroke="#a3a39e" strokeWidth="1.5" />
+              <line x1="56" y1="108" x2="516" y2="108" stroke="#a3a39e" strokeWidth="1.5" />
 
               {/* Qubit labels */}
-              <text x="16" y="52" fill="#e2e8f0" fontSize="13" fontFamily="var(--font-mono)">
+              <text x="16" y="52" fill="#111111" fontSize="13" fontWeight="500" fontFamily="var(--font-mono)">
                 q0 |0&gt;
               </text>
-              <text x="16" y="112" fill="#e2e8f0" fontSize="13" fontFamily="var(--font-mono)">
+              <text x="16" y="112" fill="#111111" fontSize="13" fontWeight="500" fontFamily="var(--font-mono)">
                 q1 |0&gt;
               </text>
 
               {/* Hartree-Fock Prep Gate X on q1 */}
-              <rect x="74" y="92" width="32" height="32" rx="4" fill="#1e293b" stroke="#60a5fa" strokeWidth="1.4" />
-              <text x="90" y="113" textAnchor="middle" fill="#93c5fd" fontSize="13" fontWeight="600" fontFamily="var(--font-mono)">
+              <rect x="74" y="92" width="32" height="32" rx="5" fill="#ffffff" stroke="#1d4ed8" strokeWidth="1.4" />
+              <text x="90" y="113" textAnchor="middle" fill="#1d4ed8" fontSize="13" fontWeight="600" fontFamily="var(--font-mono)">
                 X
               </text>
-              <text x="90" y="140" textAnchor="middle" fill="#94a3b8" fontSize="10" fontFamily="var(--font-mono)">
+              <text x="90" y="140" textAnchor="middle" fill="#737373" fontSize="10" fontFamily="var(--font-mono)">
                 HF |01&gt;
               </text>
 
@@ -257,9 +257,9 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
                 y="18"
                 width="302"
                 height="112"
-                rx="6"
-                fill="rgba(30, 58, 138, 0.16)"
-                stroke={isRunning ? '#60a5fa' : '#334155'}
+                rx="7"
+                fill="rgba(29, 78, 216, 0.03)"
+                stroke={isRunning ? '#1d4ed8' : '#d4d4d0'}
                 strokeWidth="1.2"
                 strokeDasharray="4 3"
               />
@@ -267,7 +267,7 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
                 x="277"
                 y="145"
                 textAnchor="middle"
-                fill="#cbd5e1"
+                fill="#555555"
                 fontSize="10.5"
                 fontFamily="var(--font-mono)"
               >
@@ -280,24 +280,24 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
                 y="90"
                 width="68"
                 height="36"
-                rx="4"
-                fill="#1e293b"
-                stroke="#38bdf8"
+                rx="5"
+                fill="#ffffff"
+                stroke="#1d4ed8"
                 strokeWidth="1.4"
               />
-              <text x="176" y="106" textAnchor="middle" fill="#f8fafc" fontSize="11" fontWeight="600" fontFamily="var(--font-mono)">
+              <text x="176" y="106" textAnchor="middle" fill="#111111" fontSize="11" fontWeight="600" fontFamily="var(--font-mono)">
                 RY(θ1)
               </text>
-              <text x="176" y="120" textAnchor="middle" fill="#7dd3fc" fontSize="10" fontFamily="var(--font-mono)">
+              <text x="176" y="120" textAnchor="middle" fill="#1d4ed8" fontSize="10" fontFamily="var(--font-mono)">
                 {theta1.toFixed(2)}
               </text>
 
               {/* First CNOT(0->1) */}
-              <line x1="238" y1="48" x2="238" y2="116" stroke="#f87171" strokeWidth="1.8" />
-              <circle cx="238" cy="48" r="5" fill="#f87171" />
-              <circle cx="238" cy="108" r="9" fill="#0f172a" stroke="#f87171" strokeWidth="1.8" />
-              <line x1="232" y1="108" x2="244" y2="108" stroke="#f87171" strokeWidth="1.6" />
-              <line x1="238" y1="102" x2="238" y2="114" stroke="#f87171" strokeWidth="1.6" />
+              <line x1="238" y1="48" x2="238" y2="116" stroke="#b91c1c" strokeWidth="1.7" />
+              <circle cx="238" cy="48" r="4.8" fill="#b91c1c" />
+              <circle cx="238" cy="108" r="9" fill="#ffffff" stroke="#b91c1c" strokeWidth="1.7" />
+              <line x1="232" y1="108" x2="244" y2="108" stroke="#b91c1c" strokeWidth="1.5" />
+              <line x1="238" y1="102" x2="238" y2="114" stroke="#b91c1c" strokeWidth="1.5" />
 
               {/* RY(theta0) on q0 */}
               <rect
@@ -305,40 +305,40 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
                 y="30"
                 width="76"
                 height="36"
-                rx="4"
-                fill="#1e293b"
-                stroke="#34d399"
-                strokeWidth="1.5"
+                rx="5"
+                fill="#ffffff"
+                stroke="#15803d"
+                strokeWidth="1.4"
               />
-              <text x="308" y="46" textAnchor="middle" fill="#f8fafc" fontSize="11" fontWeight="600" fontFamily="var(--font-mono)">
+              <text x="308" y="46" textAnchor="middle" fill="#111111" fontSize="11" fontWeight="600" fontFamily="var(--font-mono)">
                 RY(θ0)
               </text>
-              <text x="308" y="60" textAnchor="middle" fill="#6ee7b7" fontSize="10" fontFamily="var(--font-mono)">
+              <text x="308" y="60" textAnchor="middle" fill="#15803d" fontSize="10" fontFamily="var(--font-mono)">
                 {theta0.toFixed(2)}
               </text>
 
               {/* Second CNOT(0->1) */}
-              <line x1="376" y1="48" x2="376" y2="116" stroke="#f87171" strokeWidth="1.8" />
-              <circle cx="376" cy="48" r="5" fill="#f87171" />
-              <circle cx="376" cy="108" r="9" fill="#0f172a" stroke="#f87171" strokeWidth="1.8" />
-              <line x1="370" y1="108" x2="382" y2="108" stroke="#f87171" strokeWidth="1.6" />
-              <line x1="376" y1="102" x2="376" y2="114" stroke="#f87171" strokeWidth="1.6" />
+              <line x1="376" y1="48" x2="376" y2="116" stroke="#b91c1c" strokeWidth="1.7" />
+              <circle cx="376" cy="48" r="4.8" fill="#b91c1c" />
+              <circle cx="376" cy="108" r="9" fill="#ffffff" stroke="#b91c1c" strokeWidth="1.7" />
+              <line x1="370" y1="108" x2="382" y2="108" stroke="#b91c1c" strokeWidth="1.5" />
+              <line x1="376" y1="102" x2="376" y2="114" stroke="#b91c1c" strokeWidth="1.5" />
 
               {/* Depolarizing Noise Channel Marker */}
-              <rect x="444" y="34" width="44" height="88" rx="4" fill="#1e293b" stroke="#f59e0b" strokeWidth="1.3" strokeDasharray="3 2" />
-              <text x="466" y="72" textAnchor="middle" fill="#fbbf24" fontSize="10" fontWeight="600" fontFamily="var(--font-mono)">
+              <rect x="444" y="34" width="44" height="88" rx="5" fill="#fffbeb" stroke="#b45309" strokeWidth="1.3" strokeDasharray="3 2" />
+              <text x="466" y="72" textAnchor="middle" fill="#b45309" fontSize="10" fontWeight="600" fontFamily="var(--font-mono)">
                 Λ(F)
               </text>
-              <text x="466" y="88" textAnchor="middle" fill="#fde68a" fontSize="9.5" fontFamily="var(--font-mono)">
+              <text x="466" y="88" textAnchor="middle" fill="#92400e" fontSize="9.5" fontFamily="var(--font-mono)">
                 {(circuitFidelity * 100).toFixed(0)}%
               </text>
 
               {/* Measurement Block */}
-              <rect x="504" y="34" width="42" height="88" rx="4" fill="#1e293b" stroke="#94a3b8" strokeWidth="1.4" />
-              <text x="525" y="74" textAnchor="middle" fill="#f8fafc" fontSize="11" fontWeight="600" fontFamily="var(--font-mono)">
+              <rect x="504" y="34" width="42" height="88" rx="5" fill="#fafaf9" stroke="#111111" strokeWidth="1.3" />
+              <text x="525" y="74" textAnchor="middle" fill="#111111" fontSize="11" fontWeight="600" fontFamily="var(--font-mono)">
                 &lt;H&gt;
               </text>
-              <text x="525" y="90" textAnchor="middle" fill="#94a3b8" fontSize="9.5" fontFamily="var(--font-mono)">
+              <text x="525" y="90" textAnchor="middle" fill="#555555" fontSize="9.5" fontFamily="var(--font-mono)">
                 Pauli
               </text>
             </svg>
