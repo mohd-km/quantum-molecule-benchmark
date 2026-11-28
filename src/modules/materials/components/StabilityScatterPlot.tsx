@@ -453,7 +453,7 @@ export const StabilityScatterPlot: React.FC<StabilityScatterPlotProps> = ({
           </>
         ) : (
           <span className="inspect-placeholder">
-            Hover or tap any crystal marker to inspect stability, abundance, and commercialization lag.
+            Hover or tap any crystal marker to see its stability, abundance and how long it took to reach the market.
           </span>
         )}
       </div>
@@ -466,13 +466,13 @@ export const StabilityScatterPlot: React.FC<StabilityScatterPlotProps> = ({
             <strong>Best trade-offs (Pareto optimal):</strong> a crystal makes the cut if no other
             shortlisted crystal is at least as good on all three goals and better on one: lower
             instability (<code>E_hull</code>), higher earth-abundance score, and better band-gap fit
-            (closest to the middle of your window, or simply the widest gap when the window is open-ended,
+            (closest to the middle of your window, or the widest gap when the window is open-ended,
             as for power chips and solid electrolytes).
           </p>
           <p>
             <strong>Data:</strong> stability values (<code>E_hull</code>) are hand-curated estimates
-            modelled on Materials Project stability maps, not a live query. Band gaps use published,
-            experiment-checked values; the crystal drawer also shows a rougher quick computer
+            modelled on Materials Project stability maps rather than a live query. Band gaps use published,
+            experiment-checked values. The crystal drawer also shows a rougher quick computer
             estimate of the gap, which usually comes out too low.
           </p>
         </div>

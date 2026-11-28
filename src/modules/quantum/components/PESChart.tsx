@@ -73,7 +73,7 @@ export const PESChart: React.FC<PESChartProps> = ({
             Energy as the atoms pull apart (potential energy surface, {spec.formula}, {spec.basis})
           </h2>
           <p className="card-subtitle">
-            The dip is the natural bond length, where the molecule is happiest. Pulling the atoms apart breaks the bond. Hover or tap a point to inspect it.
+            The dip is the natural bond length, where the molecule's energy is lowest. Pulling the atoms apart breaks the bond. Hover or tap a point to inspect it.
           </p>
         </div>
         <div className="legend-row" aria-label="Chart legend">

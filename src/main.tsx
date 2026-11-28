@@ -10,7 +10,7 @@ const config: ShellConfig = {
   pillar: 'worldview & physics',
   title: "Quantum & Materials Lab",
   subtitle:
-    "Two hands-on labs at the scale of atoms: a small simulated quantum computer working out the energy of real molecules, and a screener that picks crystals that are useful, stable and buildable. Move a slider and the maths reruns in your browser.",
+    "Two labs at the scale of atoms: a small simulated quantum computer working out the energy of real molecules, and a screener that picks crystals that are useful, stable and buildable. Move a slider and the maths reruns in your browser.",
   footer: "Quantum & Materials Lab · runs entirely in your browser · Mohammed KM",
   tabs: [
     {

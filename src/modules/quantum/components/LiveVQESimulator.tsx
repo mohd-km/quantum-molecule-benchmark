@@ -178,7 +178,7 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
             Live 2-qubit circuit ({spec.formula} at bond length {point.r.toFixed(2)} Å)
           </h2>
           <p className="card-subtitle">
-            Press Run optimization. A classical optimizer nudges the circuit's dials step by step to push the energy down toward the exact answer (FCI). Change the noise or circuit length and run again.
+            Press Run optimization. A classical optimiser nudges the circuit's dials step by step to push the energy down toward the exact answer (FCI). Change the noise or circuit length and run again.
           </p>
         </div>
 
@@ -212,7 +212,7 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
       <div className="instrument-figure">
         <div className="instrument-head">
           <span className="instrument-tag">
-            Exact 2-qubit simulation &middot; the optimizer finds which way is downhill by nudging each dial a quarter-turn each way
+            Exact 2-qubit simulation &middot; the optimiser finds which way is downhill by nudging each dial a quarter-turn each way
           </span>
           <span className="instrument-metrics">
             Step <strong>{current.step}/{MAX_STEPS}</strong> &middot; Fidelity{' '}
@@ -574,7 +574,7 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
               .
             </p>
             <p>
-              Each optimization step finds the downhill direction for each dial by measuring the energy a quarter-turn either side{' '}
+              Each optimisation step finds the downhill direction for each dial by measuring the energy a quarter-turn either side{' '}
               <code>dE/dθ = 0.5 · [E(θ + π/2) - E(θ - π/2)]</code> while noise blends the clean answer with pure randomness, more so the longer the circuit:{' '}
               <code>ρ = F|ψ⟩⟨ψ| + (1 - F) I/4</code>, where <code>F = (1 - p_2q)^N_2q</code>.
             </p>

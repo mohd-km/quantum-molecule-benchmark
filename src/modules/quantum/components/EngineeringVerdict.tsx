@@ -94,7 +94,7 @@ export const EngineeringVerdict: React.FC<EngineeringVerdictProps> = ({
                 <strong>Noise tricks help short circuits:</strong> running the circuit at several noise levels and extrapolating back to zero noise (ZNE, zero-noise extrapolation), or throwing out results that break known physical rules, can cut the error 3x-10x on short circuits.
               </li>
               <li>
-                <strong>The real long-term target:</strong> where quantum computers could genuinely win in chemistry is molecules whose electrons are tightly tangled together (for example FeMoco, the core of the nitrogenase enzyme, and metal catalysts), using error-corrected machines running quantum phase estimation (QPE), not small VQE runs like this one.
+                <strong>The real long-term target:</strong> quantum computers could win in chemistry on molecules whose electrons are tightly tangled together (for example FeMoco, the core of the nitrogenase enzyme, and metal catalysts). That needs error-corrected machines running quantum phase estimation (QPE). Small VQE runs like this one will not get there.
               </li>
             </ul>
           </div>
@@ -114,7 +114,7 @@ export const EngineeringVerdict: React.FC<EngineeringVerdictProps> = ({
                 <strong>Too many measurements:</strong> each measurement returns just one random outcome, and a molecule's energy is made of thousands of separate terms, so pinning it to 1.6 mHa takes billions of circuit runs per step. On today's chips that is far slower than a normal computer.
               </li>
               <li>
-                <strong>Flat landscapes (barren plateaus):</strong> in long, generic circuits the energy landscape becomes almost perfectly flat, so the optimizer cannot tell which way is downhill unless it starts from a chemistry-informed guess.
+                <strong>Flat energy surfaces (barren plateaus):</strong> in long, generic circuits the energy surface becomes almost perfectly flat, so the optimiser cannot tell which way is downhill unless it starts from a chemistry-informed guess.
               </li>
             </ul>
           </div>

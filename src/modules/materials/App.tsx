@@ -167,7 +167,7 @@ export const App: React.FC = () => {
           <div className="brand-block">
             <h2 className="module-heading">Material screener: right electrical behaviour, stable, buildable</h2>
             <p className="site-subtitle">
-              Best trade-offs (Pareto frontier) across {MATERIALS_DATA.length} known crystals. Band gaps come from published measurements; stability, abundance and supply-risk scores are hand-curated estimates, not a live Materials Project database pull.
+              Best trade-offs (Pareto frontier) across {MATERIALS_DATA.length} known crystals. Band gaps come from published measurements. Stability, abundance and supply-risk scores are hand-curated estimates rather than a live Materials Project query.
             </p>
           </div>
         </div>

@@ -56,12 +56,12 @@ export const APPLICATION_PRESETS: PresetConfig[] = [
 ];
 
 export const BOTTLENECK_ELEMENTS = [
-  { symbol: 'Co', name: 'Cobalt', note: 'DRC mining concentration & refining bottleneck' },
-  { symbol: 'Te', name: 'Tellurium', note: 'Copper-refining byproduct; crustal rarity ~0.001 ppm' },
-  { symbol: 'In', name: 'Indium', note: 'Zinc-smelting byproduct; display/PV supply competition' },
-  { symbol: 'Ge', name: 'Germanium', note: 'Export-controlled critical metalloid' },
-  { symbol: 'Ga', name: 'Gallium', note: 'Bauxite-refining byproduct; high refining concentration' },
-  { symbol: 'La', name: 'Lanthanum', note: 'Rare-earth separation supply chain' },
+  { symbol: 'Co', name: 'Cobalt', note: 'Mined mostly in the DRC, and refined in very few places' },
+  { symbol: 'Te', name: 'Tellurium', note: 'A by-product of copper refining, about 0.001 ppm of the crust' },
+  { symbol: 'In', name: 'Indium', note: 'A by-product of zinc smelting, shared between displays and solar panels' },
+  { symbol: 'Ge', name: 'Germanium', note: 'A critical metalloid under export controls' },
+  { symbol: 'Ga', name: 'Gallium', note: 'A by-product of bauxite refining, with refining in very few hands' },
+  { symbol: 'La', name: 'Lanthanum', note: 'Depends on the narrow rare-earth separation supply chain' },
 ];
 
 export const ABUNDANT_ELEMENTS = [
@@ -212,7 +212,7 @@ export const MATERIALS_DATA: MaterialRecord[] = [
     trl: 5,
     primaryBarrier: 'Copper and zinc atoms swap places, which lowers the voltage the cell can deliver',
     commercializationAnalysis:
-      'Designed explicitly to replace In and Ga in CIGS with earth-abundant Zn and Sn. Although near the convex hull (0.004 eV/atom), low-energy Cu-Zn antisite defects create band-tail states that cap open-circuit voltage — a classic example of point-defect physics delaying commercialization after favorable DFT screening.',
+      'Designed explicitly to replace In and Ga in CIGS with earth-abundant Zn and Sn. Although near the convex hull (0.004 eV/atom), low-energy Cu-Zn antisite defects create band-tail states that cap open-circuit voltage. A classic example of point-defect physics delaying commercialization after favorable DFT screening.',
   },
   {
     id: 'cspbi3-alpha',
@@ -888,7 +888,7 @@ export const MATERIALS_DATA: MaterialRecord[] = [
     trl: 5,
     primaryBarrier: 'Breaks down where it touches sodium metal and gives off toxic gas (hydrogen sulfide) in moist air',
     commercializationAnalysis:
-      'Built entirely from ultra-abundant Na, P, and S — eliminating both Li and Ge supply risk. Requires halide doping (Cl/Br) and protective interlayers to suppress resistive interphase growth.',
+      'Built entirely from ultra-abundant Na, P and S, so it carries no Li or Ge supply risk. Requires halide doping (Cl/Br) and protective interlayers to suppress resistive interphase growth.',
   },
   {
     id: 'li3incl6-halide',

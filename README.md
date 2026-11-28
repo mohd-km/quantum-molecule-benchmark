@@ -2,7 +2,7 @@
 
 Live: https://quantum.mohammed-km.in/
 
-Two hands-on labs at the scale of atoms: a small simulated quantum computer working out the energy of real molecules, and a screener that picks crystals that are useful, stable and buildable. Move a slider and the maths reruns in your browser.
+Two labs at the scale of atoms: a small simulated quantum computer working out the energy of real molecules, and a screener that picks crystals that are useful, stable and buildable. Move a slider and the maths reruns in your browser.
 
 Tabs (deep-linkable): `#quantum`, `#materials`.
 
