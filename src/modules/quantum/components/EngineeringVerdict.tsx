@@ -29,24 +29,24 @@ export const EngineeringVerdict: React.FC<EngineeringVerdictProps> = ({
   const beatsRhfStretched = stretchedPoint.beatsHartreeFock;
 
   let verdictTier: 'pass' | 'warn' | 'fail' = 'fail';
-  let verdictHeadline = 'NISQ Noise Breaks VQE Advantage';
+  let verdictHeadline = 'Noise wipes out the quantum advantage';
   let verdictSummary = '';
   let verdictDetail = '';
 
   if (passesChemAccAtEq && fractionWithinChemAcc >= 0.8) {
     verdictTier = 'pass';
-    verdictHeadline = 'Chemical Accuracy Achieved (< 1.6 mHa)';
-    verdictSummary = `${eqPoint.vqeNoisyErrorMHa.toFixed(2)} mHa error at equilibrium (F = ${(circuitFidelity * 100).toFixed(2)}%) — requires fault-tolerant logical error rates.`;
+    verdictHeadline = 'Chemical accuracy reached (under 1.6 mHa)';
+    verdictSummary = `Off by only ${eqPoint.vqeNoisyErrorMHa.toFixed(2)} mHa at the natural bond length (fidelity ${(circuitFidelity * 100).toFixed(2)}%). Getting chips this clean needs error-corrected (fault-tolerant) qubits.`;
     verdictDetail = `At ${twoQubitErrorPct.toFixed(2)}% 2-qubit gate error across ${totalTwoQubitGates} entangling gates (depth ${circuitDepth}, fidelity ${(circuitFidelity * 100).toFixed(2)}%), Noisy VQE stays inside the 1.6 mHa chemical-accuracy corridor at equilibrium (${eqPoint.vqeNoisyErrorMHa.toFixed(2)} mHa). Reaching this regime requires fault-tolerant logical qubits or extreme error suppression.`;
   } else if (beatsRhfAtEq || beatsRhfStretched) {
     verdictTier = 'warn';
-    verdictHeadline = 'Fails Chemical Accuracy; Partial Static-Correlation Recovery';
-    verdictSummary = `${eqPoint.vqeNoisyErrorMHa.toFixed(2)} mHa at equilibrium (${(eqPoint.vqeNoisyErrorMHa / 1.6).toFixed(1)}x cutoff). Needs p_2q < ${maxAllowedErrorPctAtEq.toFixed(4)}%.`;
+    verdictHeadline = 'Not accurate enough yet, but beats the quick classical estimate somewhere';
+    verdictSummary = `Off by ${eqPoint.vqeNoisyErrorMHa.toFixed(2)} mHa at the natural bond length, ${(eqPoint.vqeNoisyErrorMHa / 1.6).toFixed(1)}x the 1.6 mHa goal. Each two-qubit step would need an error rate below ${maxAllowedErrorPctAtEq.toFixed(4)}%.`;
     verdictDetail = `Noisy VQE incurs ${eqPoint.vqeNoisyErrorMHa.toFixed(2)} mHa error at equilibrium (exceeding the 1.6 mHa cutoff by ${(eqPoint.vqeNoisyErrorMHa / 1.6).toFixed(1)}x). While it still tracks stretched-bond dissociation better than restricted Hartree-Fock (${stretchedPoint.vqeNoisyErrorMHa.toFixed(1)} mHa vs. RHF ${stretchedPoint.rhfErrorMHa.toFixed(1)} mHa), it cannot support predictive thermochemistry without lowering 2Q error below ${maxAllowedErrorPctAtEq.toFixed(4)}%.`;
   } else {
     verdictTier = 'fail';
-    verdictHeadline = 'Noise-Dominated Regime: Worse Than Classical Hartree-Fock';
-    verdictSummary = `${eqPoint.vqeNoisyErrorMHa.toFixed(1)} mHa error at equilibrium vs. RHF ${eqPoint.rhfErrorMHa.toFixed(1)} mHa (F = ${(circuitFidelity * 100).toFixed(1)}%).`;
+    verdictHeadline = 'Noise wins: worse than a quick classical estimate (Hartree-Fock)';
+    verdictSummary = `Off by ${eqPoint.vqeNoisyErrorMHa.toFixed(1)} mHa at the natural bond length, while the classical Hartree-Fock shortcut is off by ${eqPoint.rhfErrorMHa.toFixed(1)} mHa (fidelity ${(circuitFidelity * 100).toFixed(1)}%).`;
     verdictDetail = `With ${totalTwoQubitGates} two-qubit gates at ${twoQubitErrorPct.toFixed(2)}% error (circuit fidelity ${(circuitFidelity * 100).toFixed(1)}%), depolarizing noise lifts the VQE energy by ${eqPoint.vqeNoisyErrorMHa.toFixed(1)} mHa at equilibrium—worse than mean-field Hartree-Fock (${eqPoint.rhfErrorMHa.toFixed(1)} mHa). Classical CCSD(T) and FCI solve ${spec.formula} (${spec.basis}) in microseconds on a laptop.`;
   }
 
@@ -54,17 +54,17 @@ export const EngineeringVerdict: React.FC<EngineeringVerdictProps> = ({
     <section className="panel verdict-section" aria-labelledby="verdict-heading">
       <div className="section-head">
         <div>
-          <span className="eyebrow">Engineering Verdict</span>
+          <span className="eyebrow">The verdict</span>
           <h2 id="verdict-heading" className="section-title">
             {verdictHeadline}
           </h2>
         </div>
         <div className={`verdict-badge badge-${verdictTier}`}>
           {verdictTier === 'pass'
-            ? 'FTQC REGIME'
+            ? 'Needs error-corrected chips'
             : verdictTier === 'warn'
-            ? 'SUB-CHEMICAL NISQ'
-            : 'CLASSICAL WINS'}
+            ? 'Close, not there'
+            : 'Classical wins'}
         </div>
       </div>
 
@@ -74,14 +74,14 @@ export const EngineeringVerdict: React.FC<EngineeringVerdictProps> = ({
 
       <div className="details-stack">
         <details className="editorial-details">
-          <summary>Read more: Regime analysis for {spec.formula} at {twoQubitErrorPct.toFixed(2)}% 2Q error</summary>
+          <summary>Read more: what this means for {spec.formula} at {twoQubitErrorPct.toFixed(2)}% error per two-qubit step</summary>
           <div className="details-body">
             <p>{verdictDetail}</p>
           </div>
         </details>
 
         <details className="editorial-details">
-          <summary>Read more: Verified Engineering Milestones (What is Real)</summary>
+          <summary>Read more: what has really been shown so far</summary>
           <div className="details-body">
             <ul className="verdict-list">
               <li>
@@ -101,7 +101,7 @@ export const EngineeringVerdict: React.FC<EngineeringVerdictProps> = ({
         </details>
 
         <details className="editorial-details">
-          <summary>Read more: Quantum Hype vs. Computational Reality</summary>
+          <summary>Read more: quantum hype vs reality</summary>
           <div className="details-body">
             <ul className="verdict-list">
               <li>

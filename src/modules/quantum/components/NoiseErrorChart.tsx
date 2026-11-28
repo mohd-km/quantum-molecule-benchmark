@@ -56,16 +56,16 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
       <div className="chart-header">
         <div>
           <h2 className="card-title">
-            Absolute Energy Error vs. Chemical Accuracy (1.6 mHa)
+            How far each method misses the exact answer
           </h2>
           <p className="card-subtitle">
-            Log-scale deviation |E - E_FCI| in mHa. Curves above 1.6 mHa fail chemical accuracy.
+            Miss in mHa (milli-Hartree), |E - E_FCI|, on a log scale. Below the 1.6 mHa line is chemical accuracy: good enough to predict real reactions.
           </p>
         </div>
         <div className={`status-pill ${selected.beatsChemicalAccuracy ? 'pill-pass' : 'pill-fail'}`}>
           {selected.beatsChemicalAccuracy
-            ? `PASS · R=${selected.r.toFixed(2)} A (${selected.vqeNoisyErrorMHa.toFixed(2)} mHa)`
-            : `FAIL · R=${selected.r.toFixed(2)} A (${errorRatio.toFixed(1)}x cutoff)`}
+            ? `PASS · R=${selected.r.toFixed(2)} Å (${selected.vqeNoisyErrorMHa.toFixed(2)} mHa)`
+            : `FAIL · R=${selected.r.toFixed(2)} Å (${errorRatio.toFixed(1)}x the goal)`}
         </div>
       </div>
 
@@ -229,7 +229,7 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
           fontWeight="600"
           transform={`rotate(-90 18 ${pad.top + plotH / 2})`}
         >
-          |Delta E| (mHa, log)
+          Miss |ΔE| (mHa, log scale)
         </text>
       </svg>
 
@@ -237,11 +237,11 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
       <div className="error-bar-box">
         <div className="error-bar-meta">
           <span>
-            Noisy VQE Error @ R = {selected.r.toFixed(2)} A:{' '}
+            Noisy chip's miss at R = {selected.r.toFixed(2)} Å:{' '}
             <strong>{selected.vqeNoisyErrorMHa.toFixed(2)} mHa</strong> ({kcalError.toFixed(2)} kcal/mol)
           </span>
           <span>
-            Classical RHF: <strong>{selected.rhfErrorMHa.toFixed(2)} mHa</strong>
+            Quick classical estimate (Hartree-Fock): <strong>{selected.rhfErrorMHa.toFixed(2)} mHa</strong>
           </span>
         </div>
         <div className="error-meter-track" aria-hidden="true">
@@ -261,7 +261,7 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
         </div>
         <div className="error-meter-labels">
           <span>0.01 mHa</span>
-          <span className="threshold-label">1.6 mHa Cutoff</span>
+          <span className="threshold-label">1.6 mHa goal</span>
           <span>600 mHa</span>
         </div>
       </div>

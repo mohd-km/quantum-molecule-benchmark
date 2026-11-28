@@ -1,12 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import scopeModules from './scope-css.js';
 
 export default defineConfig({
-  base: './',
   plugins: [react()],
-  build: {
-    outDir: 'dist',
-    emptyOutDir: true,
-    sourcemap: false,
-  },
+  base: '/',
+  css: { postcss: { plugins: [scopeModules()] } },
+  build: { chunkSizeWarningLimit: 900 },
 });

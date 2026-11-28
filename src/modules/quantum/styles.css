@@ -1419,3 +1419,13 @@ input:focus-visible {
     justify-content: space-between;
   }
 }
+
+/* merged workbench overrides */
+.app-shell { min-height: 0; }
+.site-header { padding: 0.75rem 1rem 1rem; }
+.module-heading { font-family: var(--font-serif, 'Caudex', serif); font-size: 1.3rem; margin: 0 0 0.2rem; font-weight: 700; }
+.header-inner, .main-container { max-width: 1360px; }
+@media (min-width: 1024px) { .site-header { padding: 1rem 1.75rem 1.1rem; } .main-container { padding: 1.4rem 1.75rem 2.5rem; } }
+
+/* Plain-English hints under controls and readouts */
+.q-hint { margin: 6px 0 8px; max-width: 100%; font-size: 12.5px; line-height: 1.45; color: #555555; overflow-wrap: anywhere; }

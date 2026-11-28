@@ -175,10 +175,10 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
       <div className="sim-toolbar">
         <div className="sim-title-group">
           <h2 className="card-title">
-            Live 2-Qubit VQE Circuit &amp; Noise Simulator ({spec.formula} @ R = {point.r.toFixed(2)} A)
+            Live 2-qubit circuit ({spec.formula} at bond length {point.r.toFixed(2)} Å)
           </h2>
           <p className="card-subtitle">
-            Dial gate noise or depth, then run optimization to watch statevector VQE converge against exact FCI.
+            Press Run optimization. A classical optimizer nudges the circuit's dials step by step to push the energy down toward the exact answer (FCI). Change the noise or circuit length and run again.
           </p>
         </div>
 
@@ -212,11 +212,11 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
       <div className="instrument-figure">
         <div className="instrument-head">
           <span className="instrument-tag">
-            2-Qubit Statevector Engine &middot; Parameter-Shift Gradient
+            Exact 2-qubit simulation (statevector) &middot; slope found by the parameter-shift rule
           </span>
           <span className="instrument-metrics">
-            Iter <strong>{current.step}/{MAX_STEPS}</strong> &middot; Fidelity{' '}
-            <strong>{(circuitFidelity * 100).toFixed(2)}%</strong> &middot; p_2q{' '}
+            Step <strong>{current.step}/{MAX_STEPS}</strong> &middot; Fidelity{' '}
+            <strong>{(circuitFidelity * 100).toFixed(2)}%</strong> &middot; error per step{' '}
             <strong>{twoQubitErrorPct.toFixed(2)}%</strong>
           </span>
         </div>
@@ -347,10 +347,10 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
           {/* Live Statevector Basis Probabilities */}
           <div className="statevector-pane">
             <div className="statevector-header">
-              <span>Basis State Probabilities</span>
+              <span>Chance of each readout (basis state probabilities)</span>
               <span className="sv-legend">
-                <i className="sv-dot sv-dot-ideal" /> Ideal |ψ|²
-                <i className="sv-dot sv-dot-noisy" /> Noisy ρ_ii
+                <span className="sv-dot sv-dot-ideal" /> Perfect chip |ψ|²
+                <span className="sv-dot sv-dot-noisy" /> Noisy chip ρ_ii
               </span>
             </div>
             <div className="sv-bars">
@@ -381,9 +381,9 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
       <div className="convergence-card">
         <div className="chart-header">
           <div>
-            <h3 className="subcard-title">VQE Ground-State Energy Convergence</h3>
+            <h3 className="subcard-title">Lowest energy found, step by step (ground-state convergence)</h3>
             <p className="card-subtitle">
-              Step-by-step optimization vs. exact classical FCI ({ham.exactGroundEnergy.toFixed(5)} Ha) and RHF ({ham.rhfEnergy.toFixed(5)} Ha).
+              Target: exact answer, FCI ({ham.exactGroundEnergy.toFixed(5)} Ha). Quick classical estimate, Hartree-Fock ({ham.rhfEnergy.toFixed(5)} Ha). PASS means within 1.6 mHa of exact.
             </p>
           </div>
           <div className={`status-pill ${passesChemAcc ? 'pill-pass' : 'pill-fail'}`}>
@@ -394,10 +394,10 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
         </div>
 
         <div className="legend-row" aria-label="Convergence legend">
-          <span className="legend-item"><span className="swatch swatch-fci" />Exact FCI</span>
-          <span className="legend-item"><span className="swatch swatch-rhf" />Hartree-Fock</span>
-          <span className="legend-item"><span className="swatch swatch-vqe-ideal" />Noiseless VQE</span>
-          <span className="legend-item"><span className="swatch swatch-vqe-noisy" />Noisy VQE</span>
+          <span className="legend-item"><span className="swatch swatch-fci" />Exact (FCI)</span>
+          <span className="legend-item"><span className="swatch swatch-rhf" />Quick estimate (Hartree-Fock)</span>
+          <span className="legend-item"><span className="swatch swatch-vqe-ideal" />Perfect chip (noiseless VQE)</span>
+          <span className="legend-item"><span className="swatch swatch-vqe-noisy" />Noisy chip (noisy VQE)</span>
         </div>
 
         <svg
@@ -539,32 +539,32 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
             fontWeight="600"
             transform={`rotate(-90 16 ${pad.top + plotH / 2})`}
           >
-            Energy (Ha)
+            Energy (Hartree, Ha)
           </text>
         </svg>
 
         {/* Live Telemetry Strip under Convergence Chart */}
         <div className="sim-readout-strip">
           <div className="readout-cell">
-            <span className="readout-label">Noiseless VQE</span>
+            <span className="readout-label">Perfect chip (noiseless VQE)</span>
             <span className="readout-val text-ideal">{current.energyIdeal.toFixed(5)} Ha</span>
-            <span className="readout-sub">Err: {current.errorIdealMHa.toFixed(2)} mHa</span>
+            <span className="readout-sub">Miss: {current.errorIdealMHa.toFixed(2)} mHa</span>
           </div>
           <div className="readout-cell">
-            <span className="readout-label">Noisy NISQ VQE</span>
+            <span className="readout-label">Noisy chip (noisy VQE)</span>
             <span className="readout-val text-noisy">{current.energyNoisy.toFixed(5)} Ha</span>
-            <span className="readout-sub">Err: {current.errorNoisyMHa.toFixed(2)} mHa</span>
+            <span className="readout-sub">Miss: {current.errorNoisyMHa.toFixed(2)} mHa</span>
           </div>
           <div className="readout-cell">
-            <span className="readout-label">Exact Classical FCI</span>
+            <span className="readout-label">Exact answer (FCI)</span>
             <span className="readout-val text-fci">{ham.exactGroundEnergy.toFixed(5)} Ha</span>
-            <span className="readout-sub">Target ground state</span>
+            <span className="readout-sub">Lowest possible energy</span>
           </div>
         </div>
 
         {/* Collapsible Technical Theory Drawer */}
         <details className="editorial-details">
-          <summary>Read more: 2-qubit Hamiltonian Pauli terms &amp; noise math</summary>
+          <summary>Read more: the energy formula and noise maths</summary>
           <div className="details-body">
             <p>
               The parity-tapered 2-qubit Hamiltonian at R = {point.r.toFixed(3)} A is{' '}

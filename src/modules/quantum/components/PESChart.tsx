@@ -70,28 +70,28 @@ export const PESChart: React.FC<PESChartProps> = ({
       <div className="chart-header">
         <div>
           <h2 className="card-title">
-            Potential Energy Surface ({spec.formula}, {spec.basis})
+            Energy as the atoms pull apart (potential energy surface, {spec.formula}, {spec.basis})
           </h2>
           <p className="card-subtitle">
-            Dissociation energy (Ha) vs. bond length (A). Hover or tap any geometry to inspect.
+            The dip is the natural bond length, where the molecule is happiest. Pulling the atoms apart breaks the bond. Hover or tap a point to inspect it.
           </p>
         </div>
         <div className="legend-row" aria-label="Chart legend">
           <span className="legend-item">
             <span className="swatch swatch-fci" />
-            Exact FCI
+            Exact (FCI)
           </span>
           <span className="legend-item">
             <span className="swatch swatch-rhf" />
-            Hartree-Fock
+            Quick estimate (Hartree-Fock)
           </span>
           <span className="legend-item">
             <span className="swatch swatch-vqe-ideal" />
-            Noiseless VQE
+            Perfect chip (VQE)
           </span>
           <span className="legend-item">
             <span className="swatch swatch-vqe-noisy" />
-            Noisy VQE
+            Noisy chip (VQE)
           </span>
         </div>
       </div>
@@ -281,7 +281,7 @@ export const PESChart: React.FC<PESChartProps> = ({
           fontSize="12.5"
           fontWeight="600"
         >
-          Internuclear Bond Length R (Angstroms)
+          Bond length R (Å, ångström = 0.1 nm)
         </text>
         <text
           x={18}
@@ -292,7 +292,7 @@ export const PESChart: React.FC<PESChartProps> = ({
           fontWeight="600"
           transform={`rotate(-90 18 ${pad.top + plotH / 2})`}
         >
-          Total Energy (Hartrees, Ha)
+          Energy (Hartree, Ha)
         </text>
       </svg>
     </div>
