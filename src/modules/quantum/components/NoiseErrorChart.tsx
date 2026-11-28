@@ -125,7 +125,7 @@ export const NoiseErrorChart: React.FC<NoiseErrorChartProps> = ({
           fontWeight="600"
           fontFamily="var(--font-mono)"
         >
-          Chemical Accuracy Limit: 1.6 mHa (1.0 kcal/mol)
+          Chemical Accuracy Limit: 1.6 mHa (1.0 kcal/mol, kilocalories per mole)
         </text>
 
         {/* Curves */}

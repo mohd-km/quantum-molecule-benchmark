@@ -212,7 +212,7 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
       <div className="instrument-figure">
         <div className="instrument-head">
           <span className="instrument-tag">
-            Exact 2-qubit simulation (statevector) &middot; slope found by the parameter-shift rule
+            Exact 2-qubit simulation &middot; the optimizer finds which way is downhill by nudging each dial a quarter-turn each way
           </span>
           <span className="instrument-metrics">
             Step <strong>{current.step}/{MAX_STEPS}</strong> &middot; Fidelity{' '}
@@ -349,8 +349,8 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
             <div className="statevector-header">
               <span>Chance of each readout (basis state probabilities)</span>
               <span className="sv-legend">
-                <span className="sv-dot sv-dot-ideal" /> Perfect chip |ψ|²
-                <span className="sv-dot sv-dot-noisy" /> Noisy chip ρ_ii
+                <span className="sv-dot sv-dot-ideal" /> Perfect chip
+                <span className="sv-dot sv-dot-noisy" /> Noisy chip
               </span>
             </div>
             <div className="sv-bars">
@@ -460,7 +460,7 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
             fontSize="11"
             fontFamily="var(--font-mono)"
           >
-            RHF {ham.rhfEnergy.toFixed(4)} Ha
+            Hartree-Fock {ham.rhfEnergy.toFixed(4)} Ha
           </text>
 
           {/* Exact FCI reference line */}
@@ -567,15 +567,15 @@ export const LiveVQESimulator: React.FC<LiveVQESimulatorProps> = ({
           <summary>Read more: the energy formula and noise maths</summary>
           <div className="details-body">
             <p>
-              The parity-tapered 2-qubit Hamiltonian at R = {point.r.toFixed(3)} A is{' '}
+              The molecule's energy recipe (Hamiltonian), shrunk to 2 qubits, at bond length R = {point.r.toFixed(3)} Å is{' '}
               <code>
                 H = {ham.g0.toFixed(4)} I + ({ham.g1.toFixed(4)}) Z0 + ({ham.g2.toFixed(4)}) Z1 + ({ham.g3.toFixed(4)}) Z0Z1 + ({ham.g4.toFixed(4)}) (X0X1 + Y0Y1)
               </code>
               .
             </p>
             <p>
-              Each optimization step evaluates exact parameter-shift gradients{' '}
-              <code>dE/dθ = 0.5 · [E(θ + π/2) - E(θ - π/2)]</code> on the 4-amplitude complex statevector, while global depolarizing noise mixes the pure state with the maximally mixed state:{' '}
+              Each optimization step finds the downhill direction for each dial by measuring the energy a quarter-turn either side{' '}
+              <code>dE/dθ = 0.5 · [E(θ + π/2) - E(θ - π/2)]</code> while noise blends the clean answer with pure randomness, more so the longer the circuit:{' '}
               <code>ρ = F|ψ⟩⟨ψ| + (1 - F) I/4</code>, where <code>F = (1 - p_2q)^N_2q</code>.
             </p>
           </div>

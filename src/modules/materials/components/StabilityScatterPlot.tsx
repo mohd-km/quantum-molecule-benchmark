@@ -472,8 +472,8 @@ export const StabilityScatterPlot: React.FC<StabilityScatterPlotProps> = ({
           <p>
             <strong>Data:</strong> stability values (<code>E_hull</code>) are hand-curated estimates
             modelled on Materials Project stability maps, not a live query. Band gaps use published,
-            experiment-checked values; the crystal drawer also shows the rougher PBE gap, a quick
-            computer estimate that usually comes out too low.
+            experiment-checked values; the crystal drawer also shows a rougher quick computer
+            estimate of the gap, which usually comes out too low.
           </p>
         </div>
       </details>

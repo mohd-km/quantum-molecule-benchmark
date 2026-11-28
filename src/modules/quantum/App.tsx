@@ -154,7 +154,7 @@ export const App: React.FC = () => {
         <p className="q-hint">Energies in Hartree (Ha), the natural unit of energy for atoms. Brackets show the miss from the exact answer in mHa (milli-Hartree, a thousandth of a Hartree). Under 1.6 mHa counts as chemical accuracy: good enough to predict real chemistry.</p>
         <dl className="metric-list">
           <div className="metric-row">
-            <dt>Exact answer (FCI)</dt>
+            <dt>Exact answer (FCI, full configuration interaction: every electron arrangement counted)</dt>
             <dd className="mono-val text-fci">{selectedPoint.fci.toFixed(5)} Ha</dd>
           </div>
           <div className="metric-row">
@@ -194,7 +194,7 @@ export const App: React.FC = () => {
         <div className="header-inner">
           <div className="brand-block">
             <h2 className="module-heading">Can a small quantum computer get chemistry right?</h2>
-            <p className="site-byline">A simulated 2-qubit quantum computer runs VQE (a way to estimate a molecule's energy on a quantum computer) in your browser. Its answers are scored against published exact energies for the simple STO-3G model of each molecule (a small, standard set of building blocks for electron clouds).</p>
+            <p className="site-byline">A simulated 2-qubit quantum computer runs VQE (variational quantum eigensolver: a way to estimate a molecule's energy on a quantum computer) in your browser. Its answers are scored against published exact energies for the simple STO-3G model of each molecule (a small, standard set of building blocks for electron clouds).</p>
           </div>
 
           <div className="molecule-toggle" role="group" aria-label="Select molecule">
@@ -284,7 +284,7 @@ export const App: React.FC = () => {
             className={`tab-btn ${activeTab === 'pes' ? 'tab-btn-active' : ''}`}
             onClick={() => setActiveTab('pes')}
           >
-            Energy vs bond length (PES)
+            Energy vs bond length (PES, potential energy surface)
           </button>
           <button
             type="button"

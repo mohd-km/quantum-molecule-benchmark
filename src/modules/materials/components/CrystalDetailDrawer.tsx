@@ -89,7 +89,7 @@ export const CrystalDetailDrawer: React.FC<CrystalDetailDrawerProps> = ({
                 <span className="metric-label">Band gap (energy to free an electron)</span>
                 <span className="metric-val mono-cell">{material.bandGap.toFixed(2)} eV</span>
                 <span className="metric-sub">
-                  {material.bandGapType === 'Direct' ? 'Direct: absorbs light easily' : 'Indirect: absorbs light weakly'} · quick computer estimate (PBE) {material.pbeBandGap.toFixed(2)} eV
+                  {material.bandGapType === 'Direct' ? 'Direct: absorbs light easily' : 'Indirect: absorbs light weakly'} · quick computer estimate {material.pbeBandGap.toFixed(2)} eV
                 </span>
               </div>
               <div className="metric-box">
@@ -206,12 +206,6 @@ export const CrystalDetailDrawer: React.FC<CrystalDetailDrawerProps> = ({
               <p className="barrier-text">{material.primaryBarrier}</p>
             </div>
 
-            <details className="editorial-details">
-              <summary className="details-summary">Read the full road-to-market story</summary>
-              <div className="details-body">
-                <p className="analysis-paragraph">{material.commercializationAnalysis}</p>
-              </div>
-            </details>
           </section>
         </div>
       </aside>
